@@ -78,9 +78,6 @@ def load_data(data_dir):
             images.append(img)
             labels.append(label)
     
-    # print(f"Images[1] = {[img.shape for img in images]}\n")
-    # print(f"Labels[1] = {len(labels)}")
-    
     return (images, labels)
     
 
@@ -90,43 +87,38 @@ def get_model():
     `input_shape` of the first layer is `(IMG_WIDTH, IMG_HEIGHT, 3)`.
     The output layer should have `NUM_CATEGORIES` units, one for each category.
     """
-
-    """
-    we will need a README.md
-    what did you try, what worked well. what didnt work well what did you notice
-    """
     
     model = tf.keras.models.Sequential([
-       # Convolutional layer. Learn 64 filters using a 3x3 kernel
-       tf.keras.layers.Conv2D(
-           64, (3, 3), activation = "relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
+        # Convolutional layer. Learn 64 filters using a 3x3 kernel
+        tf.keras.layers.Conv2D(
+            64, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
 
-       # Max-pooling layer, using 2x2 pool size
-       tf.keras.layers.MaxPooling2D(pool_size = (2, 2)),
+        # Max-pooling layer, using 2x2 pool size
+        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
 
-       # Second convolutional layer with 128 filters, kernel size 2x2
-       tf.keras.layers.Conv2D(
-           128, (2, 2), activation = "relu"),
-      
-       # Max-pooling layer, using 2x2 pool size
-       tf.keras.layers.MaxPooling2D(pool_size = (2, 2)),
-       
-       # Third convolutional layer with 256 filters, kernel size 3x3
-       tf.keras.layers.Conv2D(256, (3, 3), activation='relu'),
-       tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-      
-       # Flatten units
-       tf.keras.layers.Flatten(),
-       
-       # Fully connected layer with 512 units and dropout
-       tf.keras.layers.Dense(512, activation='relu'),
-              
-       # Helping with overfitting
-       tf.keras.layers.Dropout(0.4),
+        # Second convolutional layer with 128 filters, kernel size 2x2
+        tf.keras.layers.Conv2D(
+            128, (2, 2), activation="relu"),
+        
+        # Max-pooling layer, using 2x2 pool size
+        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+        
+        # Third convolutional layer with 256 filters, kernel size 3x3
+        tf.keras.layers.Conv2D(256, (3, 3), activation='relu'),
+        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+        
+        # Flatten units
+        tf.keras.layers.Flatten(),
+        
+        # Fully connected layer with 512 units and dropout
+        tf.keras.layers.Dense(512, activation='relu'),
+                
+        # Helping with overfitting
+        tf.keras.layers.Dropout(0.4),
 
-       # Add an output layer with output units for all 43 digits
-       tf.keras.layers.Dense(NUM_CATEGORIES, activation="softmax")
-   ])
+        # Add an output layer with output units for all 43 digits
+        tf.keras.layers.Dense(NUM_CATEGORIES, activation="softmax")
+    ])
     
     model.compile(
         optimizer='adam',
